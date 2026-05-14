@@ -16,7 +16,7 @@ import {
 interface Category {
   id: string;
   name: string;
-  icon: React.ReactNode;
+  icon: React.ElementType;
   slug: string;
 }
 
@@ -25,49 +25,49 @@ const categories: Category[] = [
     id: 'pc',
     name: 'PC GAMING',
     slug: 'pc',
-    icon: <Monitor size={32} strokeWidth={1.5} />
+    icon: Monitor
   },
   {
     id: 'playstation',
     name: 'PLAYSTATION',
     slug: 'ps5',
-    icon: <Gamepad2 size={32} strokeWidth={1.5} />
+    icon: Gamepad2
   },
   {
     id: 'xbox',
     name: 'XBOX',
     slug: 'xbox',
-    icon: <Gamepad size={32} strokeWidth={1.5} />
+    icon: Gamepad
   },
   {
     id: 'nintendo',
     name: 'NINTENDO',
     slug: 'nintendo',
-    icon: <Joystick size={32} strokeWidth={1.5} />
+    icon: Joystick
   },
   {
     id: 'consoles',
     name: 'CONSOLAS',
     slug: 'consoles',
-    icon: <Cpu size={32} strokeWidth={1.5} />
+    icon: Cpu
   },
   {
     id: 'accessories',
     name: 'ACCESORIOS',
     slug: 'accessories',
-    icon: <Headphones size={32} strokeWidth={1.5} />
+    icon: Headphones
   },
   {
     id: 'new',
     name: 'LO NUEVO',
     slug: 'new',
-    icon: <Star size={32} strokeWidth={1.5} />
+    icon: Star
   },
   {
     id: 'deals',
     name: 'OFERTAS',
     slug: 'offers',
-    icon: <Tag size={32} strokeWidth={1.5} />
+    icon: Tag
   }
 ];
 
@@ -76,22 +76,25 @@ export default function CategoryBar() {
     <section className="bg-white py-4 py-md-5 shadow-sm relative z-10 border-bottom border-light overflow-hidden">
       <div className="container">
         <div className="row g-3 g-md-4 justify-content-start justify-content-lg-center flex-nowrap overflow-auto pb-2 category-nav-scroll">
-          {categories.map((category) => (
-            <div key={category.id} className="col-auto col-lg">
-              <Link href={`/catalog?category=${category.slug}`} className="text-decoration-none group">
-                <div className="category-card d-flex flex-column align-items-center p-3 p-md-4 rounded-4 text-center" style={{ minWidth: '110px' }}>
-                  <div className="icon-wrapper mb-2 mb-md-3 d-flex align-items-center justify-content-center transition-all">
-                    <div className="icon-container d-flex align-items-center justify-content-center">
-                      {React.cloneElement(category.icon as React.ReactElement, { size: 28 })}
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <div key={category.id} className="col-auto col-lg">
+                <Link href={`/catalog?category=${category.slug}`} className="text-decoration-none group">
+                  <div className="category-card d-flex flex-column align-items-center p-3 p-md-4 rounded-4 text-center" style={{ minWidth: '110px' }}>
+                    <div className="icon-wrapper mb-2 mb-md-3 d-flex align-items-center justify-content-center transition-all">
+                      <div className="icon-container d-flex align-items-center justify-content-center">
+                        <Icon size={28} strokeWidth={1.5} />
+                      </div>
                     </div>
+                    <span className="category-name text-dark fw-bold transition-all">
+                      {category.name}
+                    </span>
                   </div>
-                  <span className="category-name text-dark fw-bold transition-all">
-                    {category.name}
-                  </span>
-                </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
 

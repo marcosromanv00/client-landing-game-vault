@@ -147,9 +147,9 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
               transition: 'all 0.5s ease-out'
             }}
           >
-            <span className="gv-display text-gv-red display-5 display-md-4 fw-bold lh-1 mb-1 d-block">${activeGame.price}</span>
-            <h1 className="gv-display text-white display-5 display-md-4 fw-bold lh-1 mb-2 text-wrap">{activeGame.title}</h1>
-            <h2 className="gv-display text-white opacity-75 h5 h-md-4 mb-4">{activeGame.platform}</h2>
+            <span className="gv-display text-gv-red display-6 display-md-4 fw-bold lh-1 mb-1 d-block">${activeGame.price}</span>
+            <h1 className="gv-display text-white display-6 display-md-4 fw-bold lh-1 mb-2 text-wrap">{activeGame.title}</h1>
+            <h2 className="gv-display text-white opacity-75 h6 h-md-4 mb-4">{activeGame.platform}</h2>
           </div>
         </div>
 

@@ -93,7 +93,8 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
                 data-bs-target="#cartOffcanvas"
               >
                 <i className="bi bi-cart-plus"></i>
-                <span>Agregar al carrito</span>
+                <span className="d-none d-sm-inline">Agregar al carrito</span>
+                <span className="d-inline d-sm-none">Añadir</span>
               </button>
               <button 
                 className="btn btn-outline-light rounded-circle p-0 d-flex align-items-center justify-content-center"

@@ -84,10 +84,10 @@ export default function Home() {
               </div>
             </div>
             <div className="row g-4">
-              <div className="col-lg-4">
+              <div className="col-md-5 col-lg-4">
                 <ProductCard game={recGames[0]} large />
               </div>
-              <div className="col-lg-8">
+              <div className="col-md-7 col-lg-8">
                 <div className="row g-4">
                   <div className="col-md-12">
                      <div className="gv-card w-100 position-relative overflow-hidden" style={{ height: '220px' }}>
