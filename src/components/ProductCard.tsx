@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCart } from '@/lib/CartContext';
 import { Game } from '@/lib/data';
 
@@ -13,8 +14,16 @@ interface ProductCardProps {
 const ProductCard = ({ game, large = false }: ProductCardProps) => {
   const { addItem } = useCart();
   
+  // Use GOW as default, RDR for some specific games or based on slug length
+  const isRDR = game.slug === 'red-dead-redemption-2' || (game.slug.length % 4 === 0 && game.slug !== 'god-of-war-ragnarok');
+  
+  const assets = {
+    bg: isRDR ? '/assets/RDR_HeroBack.jpeg' : '/assets/GOW_HeroBack.jpeg',
+    char: isRDR ? '/assets/RDR_HeroCharacter.png' : '/assets/GOW_HeroCharacter.png'
+  };
+
   const gradientStyle = {
-    background: `linear-gradient(${game.gradAngle || 135}deg, ${game.gradFrom} 0%, ${game.gradTo} 100%)`
+    background: `linear-gradient(${game.gradAngle || 135}deg, ${game.gradFrom}e6 0%, ${game.gradTo}e6 100%)`
   };
 
   const handleMouseEnter = (e: React.MouseEvent) => {
@@ -54,15 +63,39 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
     >
       <Link href={`/product/${game.slug}`} className="text-decoration-none d-block h-100">
         <div className={`gv-card ${large ? 'h-100' : ''}`}>
+          {/* Background Image Layer */}
+          <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
+            <Image 
+              src={assets.bg} 
+              alt="background" 
+              fill 
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ objectFit: 'cover', opacity: 0.3 }} 
+            />
+          </div>
+
+          {/* Character Image Layer */}
+          <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
+            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.2) translateX(15%)' }}>
+              <Image 
+                src={assets.char} 
+                alt={game.title} 
+                fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
+              />
+            </div>
+          </div>
+
           {game.badge && (
-            <span className={`gv-badge ${game.badge === 'En Oferta' ? 'bg-gv-red text-white' : 'bg-white text-black'}`}>
+            <span className={`gv-badge ${game.badge === 'En Oferta' ? 'bg-gv-red text-white' : 'bg-white text-black'}`} style={{ zIndex: 4 }}>
               {game.badge}
             </span>
           )}
           
-          <div className="gv-card-gradient" style={gradientStyle}></div>
+          <div className="gv-card-gradient" style={{ ...gradientStyle, zIndex: 2 }}></div>
           
-          <div className="gv-card-content">
+          <div className="gv-card-content" style={{ zIndex: 3 }}>
             <div className="d-flex justify-content-between align-items-center mb-1">
               <span className="small opacity-75 text-white">{game.platform}</span>
               <div className="d-flex align-items-center gap-1 text-white">

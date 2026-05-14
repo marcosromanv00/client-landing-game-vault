@@ -39,28 +39,22 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
   const heroGames = games.slice(0, 4);
   const activeGame = heroGames[activeIndex] || heroGames[0];
 
-  // For the exact 1:1 recreation, we'll map known games to their assets, or fallback to GOW assets for demonstration
-  const getAssets = (slug: string) => {
-    if (slug === 'god-of-war-ragnarok') {
+  const getAssets = (index: number) => {
+    // Alternates between GOW (even) and RDR (odd)
+    if (index % 2 === 0) {
       return {
         bg: '/assets/GOW_HeroBack.jpeg',
         char: '/assets/GOW_HeroCharacter.png'
       };
-    }
-    if (slug === 'red-dead-redemption-2') {
+    } else {
       return {
         bg: '/assets/RDR_HeroBack.jpeg',
         char: '/assets/RDR_HeroCharacter.png'
       };
     }
-    // Better fallback: just use a gradient background and no character if assets don't exist
-    return {
-      bg: '',
-      char: ''
-    };
   };
 
-  const assets = getAssets(activeGame.slug);
+  const assets = getAssets(activeIndex);
 
   return (
     <section className="hero-wrapper" style={{ margin: '0' }}>
@@ -176,7 +170,7 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
                 }}
               >
                 <Image 
-                  src={getAssets(game.slug).char} 
+                  src={getAssets(index).char} 
                   alt="thumbnail" 
                   fill
                   style={{ 
