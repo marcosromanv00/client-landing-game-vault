@@ -46,26 +46,26 @@ const NavbarContent = () => {
 
   return (
     <>
-      <header className={`header-main transition-all ${isHome ? 'position-fixed w-100 z-3 px-4' : 'position-sticky top-0 z-3'} ${isScrolled ? 'py-2' : 'py-3'}`}>
+      <header className={`header-main transition-all ${isHome ? 'position-fixed w-100 z-3 px-2 px-md-4' : 'position-sticky top-0 z-3'} ${isScrolled ? 'py-1 py-md-2' : 'py-2 py-md-3'}`}>
         
         {/* Level 1: Administrative */}
-        <nav className="navbar navbar-expand navbar-dark mx-auto rounded-pill px-4 py-2 glass-header-v2 mb-2" style={{ maxWidth: '1200px' }}>
-          <div className="container-fluid align-items-center">
-            <Link href="/" className="navbar-brand fw-bold gv-display fs-3 text-white m-0 pe-4">
+        <nav className="navbar navbar-expand navbar-dark mx-auto rounded-pill px-3 px-md-4 py-2 glass-header-v2 mb-2" style={{ maxWidth: '1200px' }}>
+          <div className="container-fluid align-items-center px-0">
+            <Link href="/" className="navbar-brand fw-bold gv-display fs-4 fs-md-3 text-white m-0 pe-2 pe-md-4">
               GAME<span className="text-gv-red">VAULT</span>
             </Link>
 
-            <div className="navbar-nav mx-auto d-none d-md-flex gap-4">
+            <div className="navbar-nav mx-auto d-none d-lg-flex gap-4">
               <Link href="#" className="nav-link fw-bold text-white hover-opacity-100" style={{ fontSize: '0.7rem', letterSpacing: '2px' }}>SERVICIOS</Link>
               <Link href="#" className="nav-link fw-bold text-white hover-opacity-100" style={{ fontSize: '0.7rem', letterSpacing: '2px' }}>CONTACTO</Link>
             </div>
 
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center gap-2 gap-md-3 ms-auto">
               <button className="btn text-white p-0 border-0 hover-scale" onClick={() => setShowSearch(!showSearch)}>
                 <i className={`bi ${showSearch ? 'bi-x-lg' : 'bi-search'} fs-5`}></i>
               </button>
               
-              <Link href="#" className="btn text-white p-0 border-0 hover-scale">
+              <Link href="#" className="btn text-white p-0 border-0 d-none d-sm-block hover-scale">
                 <i className="bi bi-heart fs-5"></i>
               </Link>
               
@@ -78,7 +78,11 @@ const NavbarContent = () => {
                 )}
               </button>
 
-              <Link href="#" className="btn text-white p-0 border-0 hover-scale">
+              <button className="btn text-white p-0 border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                <i className="bi bi-list fs-4"></i>
+              </button>
+
+              <Link href="#" className="btn text-white p-0 border-0 d-none d-md-block hover-scale">
                 <div className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center" style={{ width: '28px', height: '28px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
                   <i className="bi bi-person-fill text-white fs-6"></i>
                 </div>
@@ -87,7 +91,7 @@ const NavbarContent = () => {
 
             {/* Floating Search Dropdown */}
             {showSearch && (
-              <div className="position-absolute top-100 end-0 mt-3 p-3 rounded-4 shadow-lg animate-fade-in" style={{ width: '350px', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255,255,255,0.1)', zIndex: 1000 }}>
+              <div className="position-absolute top-100 end-0 mt-3 p-3 rounded-4 shadow-lg animate-fade-in search-dropdown" style={{ width: 'min(350px, 90vw)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255,255,255,0.1)', zIndex: 1000 }}>
                 <input 
                   ref={searchInputRef}
                   type="text" 
@@ -123,10 +127,10 @@ const NavbarContent = () => {
           </div>
         </nav>
 
-        {/* Level 2: Discovery */}
-        <nav className="navbar navbar-expand mx-auto rounded-pill px-2 py-1 glass-header-v2-sub" style={{ maxWidth: '900px' }}>
+        {/* Level 2: Discovery - Hidden on Mobile */}
+        <nav className="navbar navbar-expand mx-auto rounded-pill px-2 py-1 glass-header-v2-sub d-none d-lg-block" style={{ maxWidth: '900px' }}>
           <div className="container-fluid justify-content-center">
-            <ul className="navbar-nav gap-2 gap-md-4 align-items-center">
+            <ul className="navbar-nav gap-4 align-items-center">
               {navLinks.map((link) => {
                 const isActive = fullPath === link.href;
                 return (
@@ -148,6 +152,47 @@ const NavbarContent = () => {
           </div>
         </nav>
       </header>
+
+      {/* Mobile Menu Offcanvas */}
+      <div className="offcanvas offcanvas-start bg-black text-white border-end border-secondary border-opacity-20" tabIndex={-1} id="mobileMenu" aria-labelledby="mobileMenuLabel" style={{ width: '280px' }}>
+        <div className="offcanvas-header border-bottom border-secondary border-opacity-10">
+          <h5 className="offcanvas-title gv-display text-gv-red fs-3" id="mobileMenuLabel">GAMEVAULT</h5>
+          <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body p-0">
+          <div className="p-4 border-bottom border-secondary border-opacity-10">
+            <p className="text-muted small fw-bold mb-3 tracking-widest">DESCUBRIR</p>
+            <ul className="nav flex-column gap-2">
+              {navLinks.map((link) => (
+                <li key={link.name} className="nav-item">
+                  <Link 
+                    href={link.href} 
+                    className="nav-link text-white fs-5 gv-display d-flex align-items-center justify-content-between py-2"
+                    onClick={() => {
+                        const closeBtn = document.querySelector('#mobileMenu .btn-close') as HTMLElement;
+                        if (closeBtn) closeBtn.click();
+                    }}
+                  >
+                    {link.name}
+                    <i className="bi bi-chevron-right fs-6 opacity-50"></i>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-4">
+             <p className="text-muted small fw-bold mb-3 tracking-widest">CUENTA</p>
+             <div className="d-grid gap-2">
+                <Link href="#" className="btn btn-outline-light text-start py-2 px-3 rounded-3 d-flex align-items-center gap-3">
+                   <i className="bi bi-person fs-5"></i> Mi Perfil
+                </Link>
+                <Link href="#" className="btn btn-outline-light text-start py-2 px-3 rounded-3 d-flex align-items-center gap-3">
+                   <i className="bi bi-heart fs-5"></i> Lista de Deseos
+                </Link>
+             </div>
+          </div>
+        </div>
+      </div>
 
       <OffcanvasCart />
 

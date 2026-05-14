@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Game } from '@/lib/data';
 
 interface HeroProps {
@@ -10,6 +11,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ games = [] }) => {
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
@@ -64,12 +66,14 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
     <section className="hero-wrapper" style={{ margin: '0' }}>
       <div 
         className="hero-card position-relative overflow-hidden w-100" 
+        onClick={() => router.push(`/product/${activeGame.slug}`)}
         style={{ 
           height: '92vh',
           minHeight: '600px',
           backgroundColor: '#000',
           borderBottomLeftRadius: '32px',
-          borderBottomRightRadius: '32px'
+          borderBottomRightRadius: '32px',
+          cursor: 'pointer'
         }}
       >
         {/* Layer 1: Background Image / Gradient Fallback */}
@@ -133,15 +137,8 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
           )}
         </div>
 
-        {/* Link Overlay - Makes the entire hero clickable */}
-        <Link 
-          href={`/product/${activeGame.slug}`} 
-          className="position-absolute top-0 start-0 w-100 h-100 z-1"
-          aria-label={`Ver detalles de ${activeGame.title}`}
-        />
-
         {/* Layer 4: Texts */}
-        <div className="position-absolute top-50 start-0 translate-middle-y ps-4 ps-md-5 ms-md-5 z-2 w-100" style={{ maxWidth: 'min(450px, 90vw)', pointerEvents: 'none' }}>
+        <div className="position-absolute top-50 start-0 translate-middle-y ps-4 ps-md-5 ms-md-5 z-2 w-100" style={{ maxWidth: 'min(450px, 90vw)' }}>
           <div 
             className="hero-info" 
             style={{
@@ -203,8 +200,7 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
             maxWidth: '500px',
             opacity: isTransitioning ? 0 : 1,
             transform: isTransitioning ? 'translateY(15px)' : 'translateY(0)',
-            transition: 'all 0.5s ease-out 0.1s',
-            pointerEvents: 'none'
+            transition: 'all 0.5s ease-out 0.1s'
           }}
         >
           <h3 className="text-white gv-display display-5 mb-3">DESCRIPCIÓN</h3>
@@ -218,17 +214,17 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
           <button 
             className="btn bg-white text-dark rounded-pill px-4 px-md-5 py-2 py-md-3 fw-bold text-uppercase hover-scale shadow-lg w-100 w-md-auto"
             style={{ fontSize: '0.85rem' }}
+            onClick={(e) => e.stopPropagation()}
             data-bs-toggle="offcanvas" 
             data-bs-target="#cartOffcanvas"
-            onClick={(e) => e.stopPropagation()}
           >
             AÑADIR AL CARRITO
           </button>
           <Link 
             href={`/product/${activeGame.slug}`} 
+            onClick={(e) => e.stopPropagation()}
             className="btn btn-outline-light rounded-pill px-4 px-md-5 py-2 py-md-3 fw-bold text-uppercase hover-scale shadow-lg w-100 w-md-auto"
             style={{ fontSize: '0.85rem', borderWidth: '1px' }}
-            onClick={(e) => e.stopPropagation()}
           >
             COMPRAR AHORA
           </Link>

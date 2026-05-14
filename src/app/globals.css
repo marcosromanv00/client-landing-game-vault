@@ -276,6 +276,24 @@ h1, h2, h3, .gv-display {
 .category-nav-scroll {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive adjustments for headers */
+@media (max-width: 991px) {
+  .header-main {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .glass-header-v2 {
+    border-radius: 20px !important;
+    padding: 8px 12px !important;
+  }
+  .search-dropdown {
+    right: -10px !important;
+    left: -10px !important;
+    width: auto !important;
+  }
 }
 
 /* Glassmorphism */
@@ -339,5 +357,18 @@ h1, h2, h3, .gv-display {
   .checkout-summary-card {
     position: static !important;
     margin-top: 2rem;
+  }
+}
+
+/* Hero Character Responsive */
+.hero-character-img {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media (min-width: 992px) {
+  .hero-character-img {
+    object-fit: contain !important;
+    object-position: bottom center !important;
   }
 }

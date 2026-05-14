@@ -73,16 +73,16 @@ const categories: Category[] = [
 
 export default function CategoryBar() {
   return (
-    <section className="bg-white py-5 shadow-sm relative z-10 border-bottom border-light">
+    <section className="bg-white py-4 py-md-5 shadow-sm relative z-10 border-bottom border-light overflow-hidden">
       <div className="container">
-        <div className="row g-4 justify-content-center">
+        <div className="row g-3 g-md-4 justify-content-start justify-content-lg-center flex-nowrap overflow-auto pb-2 category-nav-scroll">
           {categories.map((category) => (
-            <div key={category.id} className="col-6 col-sm-4 col-md-3 col-lg">
+            <div key={category.id} className="col-auto col-lg">
               <Link href={`/catalog?category=${category.slug}`} className="text-decoration-none group">
-                <div className="category-card d-flex flex-column align-items-center p-4 rounded-4 text-center">
-                  <div className="icon-wrapper mb-3 d-flex align-items-center justify-content-center transition-all">
+                <div className="category-card d-flex flex-column align-items-center p-3 p-md-4 rounded-4 text-center" style={{ minWidth: '110px' }}>
+                  <div className="icon-wrapper mb-2 mb-md-3 d-flex align-items-center justify-content-center transition-all">
                     <div className="icon-container d-flex align-items-center justify-content-center">
-                      {category.icon}
+                      {React.cloneElement(category.icon as React.ReactElement, { size: 28 })}
                     </div>
                   </div>
                   <span className="category-name text-dark fw-bold transition-all">
