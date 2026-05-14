@@ -51,33 +51,32 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
         char: '/assets/RDR_HeroCharacter.png'
       };
     }
-    // Fallback for others
+    // Better fallback: just use a gradient background and no character if assets don't exist
     return {
-      bg: '/assets/GOW_HeroBack.jpeg',
-      char: '/assets/GOW_HeroCharacter.png'
+      bg: '',
+      char: ''
     };
   };
 
   const assets = getAssets(activeGame.slug);
 
   return (
-    <section className="hero-wrapper" style={{ margin: '20px' }}>
+    <section className="hero-wrapper" style={{ margin: '0' }}>
       <div 
         className="hero-card position-relative overflow-hidden w-100" 
         style={{ 
-          height: '95vh',
-          minHeight: '750px',
-          maxHeight: '1000px',
+          height: '92vh',
+          minHeight: '600px',
           backgroundColor: '#000',
           borderBottomLeftRadius: '32px',
           borderBottomRightRadius: '32px'
         }}
       >
-        {/* Layer 1: Background Image */}
+        {/* Layer 1: Background Image / Gradient Fallback */}
         <div 
           className="position-absolute top-0 start-0 w-100 h-100"
           style={{
-            backgroundImage: `url(${assets.bg})`,
+            backgroundImage: assets.bg ? `url(${assets.bg})` : `linear-gradient(135deg, ${activeGame.gradFrom}, ${activeGame.gradTo})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: isTransitioning ? 0 : 0.8,
@@ -106,14 +105,13 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
         ></div>
 
         <div 
-          className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-end"
+          className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center align-items-md-end"
           style={{ pointerEvents: 'none' }}
         >
           {assets.char && (
             <div 
-              className="position-relative w-100" 
+              className="position-relative w-100 h-100" 
               style={{ 
-                height: '95%',
                 opacity: isTransitioning ? 0 : 1,
                 transform: isTransitioning ? 'translateX(-20px)' : 'translateX(0)',
                 transition: 'all 0.5s ease-out'
@@ -124,9 +122,10 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
                 alt={activeGame.title} 
                 fill
                 priority
+                className="hero-character-img"
                 style={{
-                  objectFit: 'contain',
-                  objectPosition: 'bottom center',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                   filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.7))',
                 }} 
               />
@@ -134,8 +133,15 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
           )}
         </div>
 
+        {/* Link Overlay - Makes the entire hero clickable */}
+        <Link 
+          href={`/product/${activeGame.slug}`} 
+          className="position-absolute top-0 start-0 w-100 h-100 z-1"
+          aria-label={`Ver detalles de ${activeGame.title}`}
+        />
+
         {/* Layer 4: Texts */}
-        <div className="position-absolute top-50 start-0 translate-middle-y ps-5 ms-md-5 z-2" style={{ maxWidth: '450px' }}>
+        <div className="position-absolute top-50 start-0 translate-middle-y ps-4 ps-md-5 ms-md-5 z-2 w-100" style={{ maxWidth: 'min(450px, 90vw)', pointerEvents: 'none' }}>
           <div 
             className="hero-info" 
             style={{
@@ -144,20 +150,23 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
               transition: 'all 0.5s ease-out'
             }}
           >
-            <span className="gv-display text-gv-red display-4 fw-bold lh-1 mb-1 d-block">${activeGame.price}</span>
-            <h1 className="gv-display text-white display-4 fw-bold lh-1 mb-2">{activeGame.title}</h1>
-            <h2 className="gv-display text-white opacity-75 h4 mb-4">{activeGame.platform}</h2>
+            <span className="gv-display text-gv-red display-5 display-md-4 fw-bold lh-1 mb-1 d-block">${activeGame.price}</span>
+            <h1 className="gv-display text-white display-5 display-md-4 fw-bold lh-1 mb-2 text-wrap">{activeGame.title}</h1>
+            <h2 className="gv-display text-white opacity-75 h5 h-md-4 mb-4">{activeGame.platform}</h2>
           </div>
         </div>
 
-        {/* Layer 5: Floating boxes (Other games) - Increased Size */}
-        <div className="position-absolute start-0 ps-5 ms-md-5 z-3" style={{ bottom: '12%' }}>
+        {/* Layer 5: Floating boxes (Other games) - Hidden or smaller on mobile */}
+        <div className="position-absolute start-0 ps-4 ps-md-5 ms-md-5 z-3 d-none d-md-block" style={{ bottom: '12%' }}>
           <p className="text-white fw-bold mb-3" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>OTRAS NOVEDADES:</p>
           <div className="d-flex gap-3">
             {heroGames.map((game, index) => (
               <div 
                 key={game.slug}
-                onClick={() => handleSlideChange(index)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSlideChange(index);
+                }}
                 className="switch-item rounded-4 overflow-hidden position-relative shadow-lg"
                 style={{ 
                   width: '110px', 
@@ -169,7 +178,6 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
                   transform: activeIndex === index ? 'scale(1.05)' : 'scale(1)'
                 }}
               >
-                {/* Simulated thumbnails using the same character image or gradients */}
                 <Image 
                   src={getAssets(game.slug).char} 
                   alt="thumbnail" 
@@ -186,16 +194,17 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
           </div>
         </div>
 
-        {/* Right side Description text - Brought closer to center and translated */}
+        {/* Right side Description text - Hidden on tablet/mobile */}
         <div 
-          className="position-absolute end-0 pe-5 me-md-5 me-xl-5 pe-xl-5 z-2 d-none d-lg-block" 
+          className="position-absolute end-0 pe-5 me-md-5 me-xl-5 pe-xl-5 z-2 d-none d-xl-block" 
           style={{ 
             bottom: '15%', 
-            right: 'calc(10% + 150px)', // Moved even further left (added 100px more)
-            maxWidth: '500px', // Increased width for expanded descriptions
+            right: 'calc(10% + 150px)', 
+            maxWidth: '500px',
             opacity: isTransitioning ? 0 : 1,
             transform: isTransitioning ? 'translateY(15px)' : 'translateY(0)',
-            transition: 'all 0.5s ease-out 0.1s'
+            transition: 'all 0.5s ease-out 0.1s',
+            pointerEvents: 'none'
           }}
         >
           <h3 className="text-white gv-display display-5 mb-3">DESCRIPCIÓN</h3>
@@ -204,35 +213,40 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
           </p>
         </div>
 
-        {/* Layer 6: CTAs below characters */}
-        <div className="position-absolute start-50 translate-middle-x z-3 d-flex gap-4" style={{ bottom: '8%' }}>
+        {/* Layer 6: CTAs below characters - Stacking on mobile */}
+        <div className="position-absolute start-50 translate-middle-x z-3 d-flex flex-column flex-md-row gap-3 gap-md-4 w-100 px-4 justify-content-center" style={{ bottom: '8%', maxWidth: '500px' }}>
           <button 
-            className="btn bg-white text-dark rounded-pill px-5 py-2 fw-bold text-uppercase hover-scale shadow-lg"
-            style={{ fontSize: '0.9rem' }}
+            className="btn bg-white text-dark rounded-pill px-4 px-md-5 py-2 py-md-3 fw-bold text-uppercase hover-scale shadow-lg w-100 w-md-auto"
+            style={{ fontSize: '0.85rem' }}
             data-bs-toggle="offcanvas" 
             data-bs-target="#cartOffcanvas"
+            onClick={(e) => e.stopPropagation()}
           >
             AÑADIR AL CARRITO
           </button>
           <Link 
             href={`/product/${activeGame.slug}`} 
-            className="btn btn-outline-light rounded-pill px-5 py-2 fw-bold text-uppercase hover-scale shadow-lg"
-            style={{ fontSize: '0.9rem', borderWidth: '1px' }}
+            className="btn btn-outline-light rounded-pill px-4 px-md-5 py-2 py-md-3 fw-bold text-uppercase hover-scale shadow-lg w-100 w-md-auto"
+            style={{ fontSize: '0.85rem', borderWidth: '1px' }}
+            onClick={(e) => e.stopPropagation()}
           >
             COMPRAR AHORA
           </Link>
         </div>
 
-        {/* Slide Dots (Optional, right side vertical) */}
-        <div className="position-absolute end-0 top-50 translate-middle-y pe-4 me-3 d-flex flex-column gap-3 z-3">
+        {/* Slide Dots (right side vertical) - Smaller on mobile */}
+        <div className="position-absolute end-0 top-50 translate-middle-y pe-3 pe-md-4 me-md-3 d-flex flex-column gap-2 gap-md-3 z-3">
           {heroGames.map((_, i) => (
             <span 
               key={i} 
               className="rounded-circle shadow" 
-              onClick={() => handleSlideChange(i)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSlideChange(i);
+              }}
               style={{
-                width: '10px',
-                height: '10px',
+                width: '8px',
+                height: '8px',
                 background: activeIndex === i ? 'white' : 'rgba(255,255,255,0.3)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
