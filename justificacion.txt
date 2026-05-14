@@ -1,0 +1,192 @@
+================================================================================
+GAMEVAULT CR — PROYECTO 2: PROTOTIPO WEB RESPONSIVE
+DOCUMENTO DE JUSTIFICACIÓN DE DISEÑO, PATRONES Y UX (AVANCE 2)
+================================================================================
+Curso: EIF506 - Diseño de Sitios Web | Universidad Nacional
+Estudiante: Marcos Román Valverde
+Fecha: 14 de mayo, 2026
+================================================================================
+
+--------------------------------------------------------------------------------
+1. EXPLICACIÓN DEL DISEÑO Y CONCEPTO CREATIVO
+--------------------------------------------------------------------------------
+
+El diseño de "GameVault CR" nace de la necesidad de crear una experiencia de 
+e-commerce de videojuegos que no solo sea funcional, sino que también resuene 
+con la estética "premium" y "high-tech" de la comunidad gamer moderna.
+
+CONCEPTO: "La Bóveda Digital"
+Se ha optado por un esquema de Dark Mode (Modo Oscuro) profundo (#0a0a0a) para 
+minimizar la fatiga visual durante sesiones prolongadas y resaltar la vibrancia 
+de las portadas de los juegos. El uso del rojo eléctrico (#e41e1e) como color de 
+acento no es accidental; busca evocar energía, pasión y competitividad, 
+características intrínsecas del gaming.
+
+ESTÉTICA VISUAL:
+- Glassmorphism: Se aplica en la navegación y modales mediante desenfoques de 
+  fondo (backdrop-filter: blur), lo que aporta una sensación de profundidad y 
+  modernidad.
+- Bordes Suavizados (Border Radius): El uso consistente de radios de 16px a 24px 
+  elimina la rigidez de las estructuras web tradicionales, creando una interfaz 
+  más amigable y orgánica.
+- Sombras y Capas: La jerarquía se refuerza mediante el uso de elevaciones 
+  visuales que separan claramente el fondo de las áreas de interacción.
+
+--------------------------------------------------------------------------------
+2. SECCIÓN DE PATRONES DE DISEÑO (VISTOS EN CLASE)
+--------------------------------------------------------------------------------
+
+A continuación se detallan los patrones fundamentales aplicados para optimizar 
+la experiencia del usuario (UX) en GameVault CR.
+
+--------------------------------------------------------------------------------
+PATRÓN 1: COMPOSICIÓN DE CONTENIDO Y JERARQUÍA VISUAL
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Estrategia de organización que utiliza variables visuales como 
+  tamaño, color, peso tipográfico y contraste para dictar el orden en que el 
+  usuario procesa la información.
+- APLICACIÓN EN EL SITIO: 
+  * Hero Section: El título del juego destaca por su tamaño masivo y tipografía 
+    Bebas Neue.
+  * Botones de Acción: Los Primary CTAs (Call to Action) como "Comprar Ahora" 
+    utilizan el rojo de marca para sobresalir sobre el fondo oscuro.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DEL HERO]
+- JUSTIFICACIÓN UX: Reduce la carga cognitiva al eliminar la duda sobre "qué es 
+  importante". El usuario sabe inmediatamente qué juego se promociona y qué 
+  acción debe tomar, mejorando la tasa de conversión y la satisfacción.
+
+--------------------------------------------------------------------------------
+PATRÓN 2: ESCANEO VISUAL (PATRONES F Y Z)
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Adaptación de la interfaz a los hábitos naturales de lectura en 
+  pantalla, donde el ojo humano tiende a realizar movimientos específicos antes 
+  de profundizar en el contenido.
+- APLICACIÓN EN EL SITIO:
+  * Patrón Z (Landing): El flujo inicia en el Logo (superior izquierda), pasa por 
+    la cuenta de usuario (superior derecha), baja diagonalmente por el Hero y 
+    termina en el botón de acción principal.
+  * Patrón F (Catálogo): Los productos se organizan en una cuadrícula donde los 
+    títulos y precios están alineados para un escaneo horizontal rápido.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DE CATÁLOGO / HOME]
+- JUSTIFICACIÓN UX: Al respetar el movimiento natural del ojo, se garantiza que 
+  la información crítica (marca, producto, precio) sea captada en los primeros 
+  segundos de navegación sin que el usuario tenga que "buscar" activamente.
+
+--------------------------------------------------------------------------------
+PATRÓN 3: ESTRUCTURAS DE INFORMACIÓN (BENTO GRID Y CARDS)
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Uso de contenedores modulares y cuadrículas compuestas para 
+  segmentar la información de manera densa pero organizada.
+- APLICACIÓN EN EL SITIO:
+  * Bento Grid: En la página de inicio, se utiliza una rejilla dinámica que 
+    mezcla diferentes tamaños de tarjetas para destacar consolas, accesorios y 
+    ofertas de temporada.
+  * Product Cards: Cada juego es una unidad independiente con imagen, título, 
+    calificación y precio.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DEL BENTO GRID]
+- JUSTIFICACIÓN UX: Las tarjetas (Cards) actúan como "metáforas de objetos 
+  reales", lo que las hace fáciles de entender y manipular. La Bento Grid 
+  proporciona una jerarquía visual interesante que rompe la monotonía de las 
+  cuadrículas estándar, manteniendo al usuario enganchado.
+
+--------------------------------------------------------------------------------
+PATRÓN 4: INFORMACIÓN PROGRESIVA (PROGRESSIVE DISCLOSURE)
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Técnica que oculta información compleja o secundaria para 
+  mostrarla únicamente cuando el usuario muestra interés o realiza una acción.
+- APLICACIÓN EN EL SITIO:
+  * Hover Reveal: Las tarjetas de producto ocultan detalles como la descripción 
+    corta o botones adicionales, que solo aparecen al pasar el cursor.
+  * QuickView: Permite ver detalles del producto en un modal sin abandonar la 
+    lista actual.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DE HOVER SOBRE PRODUCTO]
+- JUSTIFICACIÓN UX: Previene la "parálisis por análisis". Al mantener la 
+  interfaz limpia inicialmente, el usuario puede enfocarse en la exploración. 
+  Solo cuando decide interactuar con un item, se le entrega la data necesaria 
+  para la decisión de compra.
+
+--------------------------------------------------------------------------------
+PATRÓN 5: DESPLIEGUE DE DATOS (MEDIA-FIRST DESIGN)
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Priorización del contenido visual y multimedia sobre el texto 
+  crudo para comunicar valor de forma inmediata.
+- APLICACIÓN EN EL SITIO:
+  * Vista de Detalle: La página de producto se abre con un "Hero" que muestra el 
+    arte del juego y capturas en alta resolución, relegando la data técnica a 
+    secciones inferiores.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DE PÁGINA DE PRODUCTO]
+- JUSTIFICACIÓN UX: En la industria del entretenimiento, la decisión de compra 
+  es altamente emocional y visual. Mostrar cómo luce el juego antes de 
+  especificar sus requisitos técnicos satisface el deseo primario del usuario.
+
+--------------------------------------------------------------------------------
+PATRÓN 6: CONTENIDO SOCIAL Y PRUEBA SOCIAL (SOCIAL PROOF)
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Integración de validaciones externas (ratings, reseñas, badges) 
+  que influyen en la percepción de confianza y calidad.
+- APLICACIÓN EN EL SITIO:
+  * Ratings: Uso de estrellas (font-awesome) para mostrar la calificación de la 
+    comunidad en cada producto.
+  * Badges: Etiquetas de "Top Seller" o "Oferta" que validan la popularidad.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DE ESTRELLAS/BADGES EN CARDS]
+- JUSTIFICACIÓN UX: Reduce la fricción de compra. Un usuario tiene más 
+  probabilidades de adquirir un producto si ve que otros ya lo han validado 
+  positivamente.
+
+--------------------------------------------------------------------------------
+PATRÓN 7: TIPOGRAFÍA UX/UI
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Selección y aplicación de fuentes que cumplen roles distintos: 
+  uno para la identidad y otro para la legibilidad funcional.
+- APLICACIÓN EN EL SITIO:
+  * Bebas Neue: Para encabezados (H1, H2) y branding, aportando un tono audaz.
+  * Inter: Para todo el cuerpo de texto, descripciones y precios, garantizando 
+    máxima legibilidad en pantallas de cualquier resolución.
+- CAPTURA DE PANTALLA: [INSERTAR COMPARATIVA DE TÍTULO VS TEXTO]
+- JUSTIFICACIÓN UX: Facilita la "escaneabilidad" del sitio. El usuario aprende 
+  rápidamente a identificar qué es un título (marketing/jerarquía) y qué es 
+  información de lectura necesaria.
+
+--------------------------------------------------------------------------------
+PATRÓN 8: TENDENCIAS Y MICROINTERACCIONES
+--------------------------------------------------------------------------------
+- DESCRIPCIÓN: Uso de pequeños movimientos y estados visuales que proporcionan 
+  retroalimentación inmediata al usuario sobre sus acciones.
+- APLICACIÓN EN EL SITIO:
+  * Botones: Cambios de color suaves (transition-200ms) y escalado al hacer hover.
+  * Carrito Offcanvas: Despliegue lateral fluido que no interrumpe el flujo de 
+    navegación.
+- CAPTURA DE PANTALLA: [INSERTAR CAPTURA DE CARRITO ABIERTO]
+- JUSTIFICACIÓN UX: Hace que el sitio se sienta "vivo" y "receptivo". Las 
+  microinteracciones confirman que el sistema está funcionando y recompensan la 
+  interacción del usuario, mejorando la percepción de calidad del software.
+
+--------------------------------------------------------------------------------
+3. ESTRATEGIA DE ESPACIOS Y RESPONSIVIDAD
+--------------------------------------------------------------------------------
+
+USO DE ESPACIOS (WHITE SPACE):
+Aunque el diseño es oscuro, se ha aplicado el concepto de "Espacio en Blanco" 
+(en este caso espacio negativo oscuro) de manera rigurosa. Se utilizan márgenes 
+consistentes para separar grupos de contenido, evitando que el usuario se sienta 
+abrumado.
+
+DISEÑO RESPONSIVE:
+Implementado mediante el sistema de rejilla de Bootstrap 5.3:
+- Mobile: Columna única (col-12) para maximizar el área de toque.
+- Tablet: Dos columnas para aprovechar el ancho adicional.
+- Desktop: Cuadrículas de 3 a 4 columnas para una vista panorámica del catálogo.
+
+--------------------------------------------------------------------------------
+4. JUSTIFICACIÓN DE FORMULARIOS (CHECKOUT)
+--------------------------------------------------------------------------------
+
+El formulario de pago y envío aplica principios de UX avanzada:
+- Agrupación por Pasos: Segmentación clara entre datos personales, envío y pago.
+- Enfoque Visual: Uso de bordes resaltados en los inputs activos.
+- Validación en Tiempo Real: Mensajes de error claros que guían al usuario para 
+  corregir datos incorrectos sin frustración.
+
+================================================================================
+FIN DEL DOCUMENTO | GAMEVAULT CR 2026
+================================================================================
