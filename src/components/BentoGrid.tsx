@@ -34,33 +34,65 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
              <div className="row g-4 h-100">
                 <div className="col-12">
                     <div className="gv-card w-100 position-relative overflow-hidden shadow-lg" style={{ height: '300px' }}>
-                         <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(90deg, ${games[1].gradFrom}, ${games[1].gradTo})`, zIndex: 1, opacity: 0.85 }}></div>
-                         
-                         {/* Background Layer */}
+                         {/* Layer 1: Fondo (Background Image) */}
                          <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
                            <Image 
-                             src="/assets/GOW_HeroBack.jpeg" 
+                             src="/assets/GOW_HeroBack.webp" 
                              alt="" 
                              fill 
-                             sizes="(max-width: 1200px) 100vw, 800px"
-                             style={{ objectFit: 'cover', opacity: 0.4 }} 
+                             priority
+                             sizes="(max-width: 768px) 100vw, 500px"
+                             style={{ objectFit: 'cover', opacity: 0.6 }} 
                            />
                          </div>
 
-                         {/* Character Layer */}
-                         <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
-                            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.1) translateX(25%) translateY(5%)' }}>
+                         {/* Layer 2: Filtro de color */}
+                         <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(90deg, ${games[1].gradFrom}, ${games[1].gradTo})`, zIndex: 1, opacity: 0.6 }}></div>
+                         
+                         {/* Layer 3: Viñeta */}
+                         <div 
+                           className="position-absolute top-0 start-0 w-100 h-100" 
+                           style={{ 
+                             background: 'radial-gradient(circle, transparent 30%, rgba(0,0,0,0.5) 100%)',
+                             zIndex: 2,
+                             pointerEvents: 'none'
+                           }}
+                         ></div>
+
+                         {/* Layer 4: Personaje */}
+                         <div className="gv-card-character">
+                            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.3) translateX(20%)' }}>
                               <Image 
-                                src="/assets/GOW_HeroCharacter.png" 
+                                src="/assets/GOW_HeroCharacter.webp" 
                                 alt="" 
                                 fill 
-                                sizes="400px"
+                                sizes="300px"
                                 style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
                               />
                             </div>
                          </div>
+
+                         {/* Layer 5: Degradado a negro */}
+                         <div 
+                           className="position-absolute top-0 start-0 w-100 h-100" 
+                           style={{ 
+                             background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)',
+                             zIndex: 4,
+                             pointerEvents: 'none'
+                           }}
+                         ></div>
+                         <div 
+                           className="position-absolute top-0 start-0 w-100" 
+                           style={{ 
+                             height: '40%', 
+                             background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%)',
+                             zIndex: 4,
+                             pointerEvents: 'none'
+                           }}
+                         ></div>
                          
-                         <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4 p-md-5" style={{ zIndex: 2, background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)' }}>
+                         {/* Layer 6: Textos y botones */}
+                         <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4 p-md-5" style={{ zIndex: 5 }}>
                             <div className="flex-grow-1">
                                 <span className="badge bg-white text-black mb-3 px-3 py-2 rounded-0 fw-bold">{games[1].platform}</span>
                                 <h3 className="gv-display display-4 mb-2 text-white">{games[1].title}</h3>
@@ -87,38 +119,54 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
           {/* Middle Row: Denser Grid */}
           <div className="col-md-12 col-lg-6">
             <div className="gv-card h-100 bg-gv-red d-flex flex-row align-items-center justify-content-between p-4 p-md-5 overflow-hidden position-relative group shadow-lg">
-                {/* Background Layer */}
+                {/* Layer 1: Fondo */}
                 <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
                   <Image 
-                    src="/assets/RDR_HeroBack.jpeg" 
+                    src="/assets/RDR_HeroBack.webp" 
                     alt="" 
                     fill 
-                    sizes="(max-width: 1200px) 100vw, 800px"
-                    style={{ objectFit: 'cover', opacity: 0.3 }} 
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    style={{ objectFit: 'cover', opacity: 0.5 }} 
                   />
                 </div>
 
-                {/* Character Layer */}
-                <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
-                  <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.3) translateX(30%)' }}>
+                {/* Layer 2: Filtro de color (Using red base from bg-gv-red but adding more depth) */}
+                <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ background: 'linear-gradient(135deg, rgba(228,30,30,0.4), rgba(0,0,0,0.6))' }}></div>
+
+                {/* Layer 3: Viñeta */}
+                <div className="position-absolute top-0 start-0 w-100 h-100 z-2" style={{ background: 'radial-gradient(circle, transparent 40%, rgba(0,0,0,0.5) 100%)' }}></div>
+
+                {/* Layer 4: Personaje */}
+                <div className="gv-card-character">
+                  <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.4) translateX(25%)' }}>
                     <Image 
-                      src="/assets/RDR_HeroCharacter.png" 
+                      src="/assets/RDR_HeroCharacter.webp" 
                       alt="" 
                       fill 
-                      sizes="400px"
+                      sizes="300px"
                       style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
                     />
                   </div>
                 </div>
 
-                <div className="position-absolute top-0 end-0 w-100 h-100 opacity-10 pointer-events-none transition-all z-2" style={{ background: 'radial-gradient(circle at top right, white, transparent)' }}></div>
-                <div className="position-relative" style={{ zIndex: 3 }}>
+                {/* Layer 5: Degradado a negro */}
+                <div 
+                  className="position-absolute top-0 start-0 w-100 h-100" 
+                  style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
+                    zIndex: 4,
+                    pointerEvents: 'none'
+                  }}
+                ></div>
+
+                {/* Layer 6: Contenido */}
+                <div className="position-relative" style={{ zIndex: 5 }}>
                     <div className="display-3 gv-display text-white mb-0" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>-70%</div>
                     <h3 className="gv-display text-white mb-3">OFERTA FLASH</h3>
                     <p className="text-white opacity-90 mb-4 d-none d-md-block fw-light" style={{ maxWidth: '250px' }}>Solo por las próximas 24 horas. Amplía tu colección hoy mismo.</p>
                     <Link href="/catalog" className="btn btn-white text-gv-red rounded-0 px-5 py-2 fw-bold shadow hover-scale transition-all" style={{ background: 'white' }}>VER OFERTAS</Link>
                 </div>
-                <div className="d-none d-md-block position-relative" style={{ zIndex: 3, transform: 'rotate(15deg)' }}>
+                <div className="d-none d-md-block position-relative" style={{ zIndex: 5, transform: 'rotate(15deg)' }}>
                     <i className="bi bi-lightning-fill text-white" style={{ fontSize: '10rem', opacity: 0.15 }}></i>
                 </div>
             </div>
@@ -138,7 +186,7 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
                     {/* Background Layer */}
                     <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
                       <Image 
-                        src="/assets/GOW_HeroBack.jpeg" 
+                        src="/assets/GOW_HeroBack.webp" 
                         alt="" 
                         fill 
                         sizes="100vw"

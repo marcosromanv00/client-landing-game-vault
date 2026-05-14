@@ -1,6 +1,5 @@
-'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Hero from '@/components/Hero';
 import BentoGrid from '@/components/BentoGrid';
 import GameCarousel from '@/components/GameCarousel';
@@ -11,33 +10,8 @@ import Image from 'next/image';
 import { Game } from '@/lib/data';
 import { getProducts } from '@/lib/supabase';
 
-export default function Home() {
-  const [products, setProducts] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100 bg-white">
-        <div className="spinner-border text-gv-red" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
-  }
+export default async function Home() {
+  const products = await getProducts();
 
   // Segmenting data
   // Segmenting data - Specific selection for Hero to include RDR2 instead of FIFA
@@ -92,33 +66,50 @@ export default function Home() {
                 <div className="row g-4">
                   <div className="col-md-12">
                       <div className="gv-card w-100 position-relative overflow-hidden shadow-lg" style={{ height: '220px' }}>
-                        <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(135deg, ${recGames[1].gradFrom}, ${recGames[1].gradTo})`, opacity: 0.85, zIndex: 1 }}></div>
-                        
-                        {/* Background Layer */}
+                        {/* Layer 1: Fondo */}
                         <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
                           <Image 
-                            src="/assets/RDR_HeroBack.jpeg" 
+                            src="/assets/RDR_HeroBack.webp" 
                             alt="" 
                             fill 
-                            sizes="(max-width: 1200px) 100vw, 1000px"
-                            style={{ objectFit: 'cover', opacity: 0.3 }} 
+                            priority
+                            sizes="(max-width: 768px) 100vw, 400px"
+                            style={{ objectFit: 'cover', opacity: 0.5 }} 
                           />
                         </div>
 
-                        {/* Character Layer */}
-                        <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
-                          <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.2) translateX(35%) translateY(10%)' }}>
+                        {/* Layer 2: Filtro de color */}
+                        <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(135deg, ${recGames[1].gradFrom}, ${recGames[1].gradTo})`, opacity: 0.6, zIndex: 1 }}></div>
+                        
+                        {/* Layer 3: Viñeta */}
+                        <div className="position-absolute top-0 start-0 w-100 h-100 z-2" style={{ background: 'radial-gradient(circle, transparent 40%, rgba(0,0,0,0.5) 100%)' }}></div>
+
+                        {/* Layer 4: Personaje */}
+                        <div className="gv-card-character">
+                          <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.4) translateX(30%) translateY(5%)' }}>
                             <Image 
-                              src="/assets/RDR_HeroCharacter.png" 
+                              src="/assets/RDR_HeroCharacter.webp" 
                               alt="" 
                               fill 
-                              sizes="400px"
+                              sizes="300px"
                               style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
                             />
                           </div>
                         </div>
 
-                        <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4" style={{ zIndex: 2 }}>
+                        {/* Layer 5: Degradado a negro */}
+                        <div 
+                          className="position-absolute bottom-0 start-0 w-100" 
+                          style={{ 
+                            height: '70%', 
+                            background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)',
+                            zIndex: 4,
+                            pointerEvents: 'none'
+                          }}
+                        ></div>
+
+                        {/* Layer 6: Textos y botones */}
+                        <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4" style={{ zIndex: 5 }}>
                           <div>
                             <span className="badge bg-white text-dark mb-2">DESTACADO</span>
                             <h3 className="gv-display h2 mb-1 text-white">{recGames[1].title}</h3>
@@ -237,16 +228,6 @@ export default function Home() {
       </section>
 
 
-      <style jsx>{`
-        .hover-bg-gv-red:hover {
-          background-color: var(--gv-red) !important;
-          border-color: var(--gv-red) !important;
-        }
-        .transition-all {
-          transition: all 0.3s ease;
-        }
-        .smaller { font-size: 0.75rem; }
-      `}</style>
     </div>
   );
 }

@@ -18,8 +18,8 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
   const isRDR = game.slug === 'red-dead-redemption-2' || (game.slug.length % 4 === 0 && game.slug !== 'god-of-war-ragnarok');
   
   const assets = {
-    bg: isRDR ? '/assets/RDR_HeroBack.jpeg' : '/assets/GOW_HeroBack.jpeg',
-    char: isRDR ? '/assets/RDR_HeroCharacter.png' : '/assets/GOW_HeroCharacter.png'
+    bg: isRDR ? '/assets/RDR_HeroBack.webp' : '/assets/GOW_HeroBack.webp',
+    char: isRDR ? '/assets/RDR_HeroCharacter.webp' : '/assets/GOW_HeroCharacter.webp'
   };
 
   const gradientStyle = {
@@ -63,20 +63,33 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
     >
       <Link href={`/product/${game.slug}`} className="text-decoration-none d-block h-100">
         <div className={`gv-card ${large ? 'h-100' : ''}`}>
-          {/* Background Image Layer */}
+          {/* Layer 1: Fondo (Background Image) */}
           <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
             <Image 
               src={assets.bg} 
               alt="background" 
               fill 
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              style={{ objectFit: 'cover', opacity: 0.3 }} 
+              style={{ objectFit: 'cover', opacity: 0.5 }} 
             />
           </div>
 
-          {/* Character Image Layer */}
-          <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
-            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.2) translateX(15%)' }}>
+          {/* Layer 2: Filtro de color (Colored Gradient Overlay) */}
+          <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ ...gradientStyle, zIndex: 1, opacity: 0.7 }}></div>
+          
+          {/* Layer 3: Viñeta (Dark edge/vignette) */}
+          <div 
+            className="position-absolute top-0 start-0 w-100 h-100" 
+            style={{ 
+              background: 'radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%)',
+              zIndex: 2,
+              pointerEvents: 'none'
+            }}
+          ></div>
+
+          {/* Layer 4: Personaje (Character Image) */}
+          <div className="gv-card-character">
+            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.4) translateX(10%)' }}>
               <Image 
                 src={assets.char} 
                 alt={game.title} 
@@ -87,16 +100,35 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
             </div>
           </div>
 
-          {game.badge && (
-            <span className={`gv-badge ${game.badge === 'En Oferta' ? 'bg-gv-red text-white' : 'bg-white text-black'}`} style={{ zIndex: 4 }}>
-              {game.badge}
-            </span>
-          )}
-          
-          <div className="gv-card-gradient" style={{ ...gradientStyle, zIndex: 2 }}></div>
-          
-          <div className="gv-card-content" style={{ zIndex: 3 }}>
-            <div className="d-flex justify-content-between align-items-center mb-1">
+          {/* Layer 5: Degradado a negro (Contrast for text) */}
+          <div 
+            className="position-absolute bottom-0 start-0 w-100" 
+            style={{ 
+              height: '60%', 
+              background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)',
+              zIndex: 4,
+              pointerEvents: 'none'
+            }}
+          ></div>
+          <div 
+            className="position-absolute top-0 start-0 w-100" 
+            style={{ 
+              height: '30%', 
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)',
+              zIndex: 4,
+              pointerEvents: 'none'
+            }}
+          ></div>
+
+          {/* Layer 6: Textos y botones (Content) */}
+          <div className="gv-card-content" style={{ zIndex: 5 }}>
+            {game.badge && (
+              <span className={`gv-badge ${game.badge === 'En Oferta' ? 'bg-gv-red text-white' : 'bg-white text-black'}`} style={{ marginBottom: 'auto' }}>
+                {game.badge}
+              </span>
+            )}
+            
+            <div className="d-flex justify-content-between align-items-center mb-1 mt-auto">
               <span className="small opacity-75 text-white">{game.platform}</span>
               <div className="d-flex align-items-center gap-1 text-white">
                 <i className="bi bi-star-fill text-warning" style={{ fontSize: '0.7rem' }}></i>
@@ -118,7 +150,7 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
               </div>
             </div>
 
-            <div className="d-flex gap-2 mt-auto">
+            <div className="d-flex gap-2">
               <button 
                 className="gv-card-btn flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                 onClick={handleAddToCart}
@@ -135,7 +167,6 @@ const ProductCard = ({ game, large = false }: ProductCardProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  // Wishlist logic
                 }}
               >
                 <i className="bi bi-heart"></i>

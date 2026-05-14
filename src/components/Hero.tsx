@@ -43,13 +43,13 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
     // Alternates between GOW (even) and RDR (odd)
     if (index % 2 === 0) {
       return {
-        bg: '/assets/GOW_HeroBack.jpeg',
-        char: '/assets/GOW_HeroCharacter.png'
+        bg: '/assets/GOW_HeroBack.webp',
+        char: '/assets/GOW_HeroCharacter.webp'
       };
     } else {
       return {
-        bg: '/assets/RDR_HeroBack.jpeg',
-        char: '/assets/RDR_HeroCharacter.png'
+        bg: '/assets/RDR_HeroBack.webp',
+        char: '/assets/RDR_HeroCharacter.webp'
       };
     }
   };
@@ -71,17 +71,33 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
         }}
       >
         {/* Layer 1: Background Image / Gradient Fallback */}
-        <div 
-          className="position-absolute top-0 start-0 w-100 h-100"
-          style={{
-            backgroundImage: assets.bg ? `url(${assets.bg})` : `linear-gradient(135deg, ${activeGame.gradFrom}, ${activeGame.gradTo})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: isTransitioning ? 0 : 0.8,
-            transform: isTransitioning ? 'scale(1.02)' : 'scale(1)',
-            transition: 'opacity 0.6s ease-in-out, transform 4s ease-out'
-          }}
-        ></div>
+        <div className="position-absolute top-0 start-0 w-100 h-100">
+          {assets.bg ? (
+            <Image 
+              src={assets.bg} 
+              alt="background" 
+              fill 
+              priority 
+              sizes="100vw"
+              style={{ 
+                objectFit: 'cover', 
+                objectPosition: 'center',
+                opacity: isTransitioning ? 0 : 0.8,
+                transform: isTransitioning ? 'scale(1.02)' : 'scale(1)',
+                transition: 'opacity 0.6s ease-in-out, transform 4s ease-out'
+              }} 
+            />
+          ) : (
+            <div 
+              className="w-100 h-100"
+              style={{
+                background: `linear-gradient(135deg, ${activeGame.gradFrom}, ${activeGame.gradTo})`,
+                opacity: isTransitioning ? 0 : 0.8,
+                transition: 'opacity 0.6s ease-in-out'
+              }}
+            ></div>
+          )}
+        </div>
 
         {/* Layer 2: Main Gradient (Darker on the right for description, darker at bottom) */}
         <div 

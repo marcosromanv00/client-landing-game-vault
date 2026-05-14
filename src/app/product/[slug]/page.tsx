@@ -29,20 +29,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const getAssets = (slug: string) => {
     if (slug === 'god-of-war-ragnarok') {
       return {
-        bg: '/assets/GOW_HeroBack.jpeg',
-        char: '/assets/GOW_HeroCharacter.png'
+        bg: '/assets/GOW_HeroBack.webp',
+        char: '/assets/GOW_HeroCharacter.webp'
       };
     }
     if (slug === 'red-dead-redemption-2') {
       return {
-        bg: '/assets/RDR_HeroBack.jpeg',
-        char: '/assets/RDR_HeroCharacter.png'
+        bg: '/assets/RDR_HeroBack.webp',
+        char: '/assets/RDR_HeroCharacter.webp'
       };
     }
     // Default fallback to ensure there's always a hero background/character as requested
     return {
-      bg: '/assets/GOW_HeroBack.jpeg',
-      char: '/assets/GOW_HeroCharacter.png'
+      bg: '/assets/GOW_HeroBack.webp',
+      char: '/assets/GOW_HeroCharacter.webp'
     };
   };
 
@@ -61,17 +61,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             borderRadius: '32px'
           }}
         >
-          {/* Layer 1: Background Image or Gradient Fallback */}
-          <div 
-            className="position-absolute top-0 start-0 w-100 h-100"
-            style={{
-              backgroundImage: assets.bg ? `url(${assets.bg})` : 'none',
-              background: !assets.bg ? `linear-gradient(${game.gradAngle || 135}deg, ${game.gradFrom} 0%, ${game.gradTo} 100%)` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              opacity: 0.8
-            }}
-          ></div>
+          <div className="position-absolute top-0 start-0 w-100 h-100">
+            {assets.bg ? (
+              <Image 
+                src={assets.bg} 
+                alt="background" 
+                fill 
+                priority
+                sizes="100vw"
+                style={{ 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  opacity: 0.8
+                }} 
+              />
+            ) : (
+              <div 
+                className="w-100 h-100"
+                style={{
+                  background: `linear-gradient(${game.gradAngle || 135}deg, ${game.gradFrom} 0%, ${game.gradTo} 100%)`,
+                  opacity: 0.8
+                }}
+              ></div>
+            )}
+          </div>
 
           {/* Layer 2: Main Gradient */}
           <div 

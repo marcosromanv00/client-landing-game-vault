@@ -81,8 +81,8 @@ export default function CategoryBar() {
             const Icon = category.icon;
             const isRDR = index % 2 !== 0;
             const assets = {
-              bg: isRDR ? '/assets/RDR_HeroBack.jpeg' : '/assets/GOW_HeroBack.jpeg',
-              char: isRDR ? '/assets/RDR_HeroCharacter.png' : '/assets/GOW_HeroCharacter.png'
+              bg: isRDR ? '/assets/RDR_HeroBack.webp' : '/assets/GOW_HeroBack.webp',
+              char: isRDR ? '/assets/RDR_HeroCharacter.webp' : '/assets/GOW_HeroCharacter.webp'
             };
 
             return (
