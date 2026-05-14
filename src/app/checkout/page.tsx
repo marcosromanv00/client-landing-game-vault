@@ -12,6 +12,21 @@ const CheckoutPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const { cart, cartTotal, clearCart } = useCart();
 
+  const [formData, setFormData] = useState({
+    firstName: 'Marco',
+    lastName: 'Rivas',
+    email: 'marco.rivas@ejemplo.com',
+    address: 'Av. Principal 123, San José, CR',
+    cardNumber: '4242 4242 4242 4242',
+    expiry: '12/26',
+    cvc: '123'
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const nextStep = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
@@ -57,7 +72,7 @@ const CheckoutPage = () => {
   return (
     <div className="bg-gv-black min-vh-100 pb-5">
       <div className="container">
-        <Breadcrumbs items={[{ label: 'Carrito', href: '/catalog' }, { label: 'Checkout', active: true }]} />
+        <Breadcrumbs items={[{ label: 'Carrito', href: '/catalog' }, { label: 'Checkout', active: true }]} isDark={true} />
         
         <div className="row g-5">
           <div className="col-lg-8">
@@ -83,19 +98,19 @@ const CheckoutPage = () => {
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label small fw-bold text-uppercase opacity-50">Nombre</label>
-                      <input type="text" className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
+                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
                     </div>
                     <div className="col-md-6">
                       <label className="form-label small fw-bold text-uppercase opacity-50">Apellido</label>
-                      <input type="text" className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
+                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
                     </div>
                     <div className="col-12">
                       <label className="form-label small fw-bold text-uppercase opacity-50">Email</label>
-                      <input type="email" className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
+                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
                     </div>
                     <div className="col-12">
                       <label className="form-label small fw-bold text-uppercase opacity-50">Dirección</label>
-                      <input type="text" className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
+                      <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="form-control bg-gv-black border-secondary text-white rounded-3 py-2" required />
                     </div>
                   </div>
                   <button className="btn btn-gv-red w-100 py-3 rounded-pill fw-bold mt-5" type="submit">SIGUIENTE PASO</button>
@@ -112,13 +127,13 @@ const CheckoutPage = () => {
                     </div>
                     <div className="row g-3">
                       <div className="col-12">
-                        <input type="text" className="form-control bg-dark border-secondary text-white" placeholder="Número de Tarjeta" required />
+                        <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleInputChange} className="form-control bg-dark border-secondary text-white" placeholder="Número de Tarjeta" autoComplete="off" required />
                       </div>
                       <div className="col-md-6">
-                        <input type="text" className="form-control bg-dark border-secondary text-white" placeholder="MM/YY" required />
+                        <input type="text" name="expiry" value={formData.expiry} onChange={handleInputChange} className="form-control bg-dark border-secondary text-white" placeholder="MM/YY" autoComplete="off" required />
                       </div>
                       <div className="col-md-6">
-                        <input type="text" className="form-control bg-dark border-secondary text-white" placeholder="CVC" required />
+                        <input type="text" name="cvc" value={formData.cvc} onChange={handleInputChange} className="form-control bg-dark border-secondary text-white" placeholder="CVC" autoComplete="off" required />
                       </div>
                     </div>
                   </div>
@@ -135,11 +150,11 @@ const CheckoutPage = () => {
                   <div className="bg-gv-black p-4 rounded-4 border border-secondary mb-4">
                     <div className="d-flex justify-content-between mb-2">
                       <span className="opacity-50">Dirección:</span>
-                      <span className="fw-bold text-end">Av. Principal 123, San José</span>
+                      <span className="fw-bold text-end">{formData.address}</span>
                     </div>
                     <div className="d-flex justify-content-between mb-2">
                       <span className="opacity-50">Método:</span>
-                      <span className="fw-bold">Tarjeta terminada en 4242</span>
+                      <span className="fw-bold">Tarjeta terminada en {formData.cardNumber.slice(-4)}</span>
                     </div>
                   </div>
                   <div className="d-flex gap-3 mt-4">
@@ -151,8 +166,8 @@ const CheckoutPage = () => {
             </div>
           </div>
           
-          <div className="col-lg-4">
-            <div className="card border-0 shadow-lg rounded-4 p-4 sticky-top bg-dark text-white" style={{ top: '120px' }}>
+          <div className="col-lg-4 mt-4 mt-lg-0">
+            <div className="card border-0 shadow-lg rounded-4 p-4 sticky-lg-top bg-dark text-white checkout-summary-card" style={{ top: '120px' }}>
               <h4 className="gv-display mb-4">MI CARRITO</h4>
               <div className="mb-4 overflow-auto" style={{ maxHeight: '300px' }}>
                 {cart.map(item => (
