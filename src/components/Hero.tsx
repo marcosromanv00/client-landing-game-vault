@@ -120,6 +120,7 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
                 alt={activeGame.title} 
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 50vw"
                 className="hero-character-img"
                 style={{
                   objectFit: 'cover',
@@ -173,6 +174,7 @@ const Hero: React.FC<HeroProps> = ({ games = [] }) => {
                   src={getAssets(index).char} 
                   alt="thumbnail" 
                   fill
+                  sizes="110px"
                   style={{ 
                     objectFit: 'cover', 
                     objectPosition: 'center 20%', 
