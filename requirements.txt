@@ -1,0 +1,127 @@
+Universidad Nacional
+Escuela de Informática
+Curso: EIF506- Diseño de Sitios Web
+Proyecto 2
+Prototipo Web Responsive
+Objetivo
+Diseñar e implementar un prototipo web funcional, responsive y navegable, basado en el Proyecto 1, aplicando los conceptos vistos hasta la sesión 10, con énfasis en:
+● Estructura del sitio
+● Navegación web
+● Patrones de diseño
+● Maquetado con rejillas
+● Formularios web
+● Diseño responsive
+● Uso de Bootstrap
+Relación con Proyecto 1
+El prototipo debe construirse a partir de:
+● Arquitectura de información
+● Modelo de datos
+● Catálogo de contenido
+Debe existir coherencia total entre lo analizado y lo implementado.
+Requisitos técnicos obligatorios
+1. Uso de Bootstrap
+Se debe utilizar Bootstrap 5 o superior.
+Debe evidenciar el uso de:
+● Grid system (container, row, col)
+● Responsive utilities (col-md, col-lg, etc.)
+● Componentes:
+○ Navbar
+○ Cards
+○ Forms
+○ Buttons
+○ Alerts o feedback visual
+○ etc
+● Clases de espaciado
+2. Diseño Responsive
+El sitio debe adaptarse correctamente a:
+● 📱 Móvil
+● 💻 Tablet
+● 🖥️ Desktop
+Debe evidenciar:
+● Uso correcto de breakpoints de Bootstrap
+● Reorganización del contenido en pantallas pequeñas
+● Menú adaptable
+● Imágenes fluidas
+● Formularios utilizables en móvil
+Se evaluará:
+● Legibilidad
+● Navegación en móvil
+● Distribución del contenido
+3. Patrones de diseño
+Se deben implementar y documentar al menos 3 patrones de diseño vistos en el curso.
+4. Estructura mínima del sitio
+El prototipo debe incluir como mínimo:
+1. Página de inicio
+● Navegación principal
+● Secciones destacadas
+● Acceso a categorías
+2. Página de listado
+● Uso de cards en grid responsive
+● Exploración de contenido
+3. Página de detalle
+● Información del producto
+● Elementos relacionados
+4. Página de búsqueda
+● Campo de entrada
+● Resultados simulados
+5. Carrito de compras
+● Lista de productos
+6. Formulario de compra (clave del proyecto)
+Debe aplicar:
+● Labels claros
+● Inputs correctos
+● Texto de ayuda
+● Agrupación lógica
+● Buen uso en móvil
+5. Requisitos de diseño
+El sitio debe:
+● Mantener consistencia visual
+● Aplicar jerarquía clara
+● Ser usable en móvil
+● Evitar sobrecarga visual
+Entregables
+1. Documento PDF
+Debe incluir:
+● Explicación del diseño
+● Sección de patrones de diseño:
+○ Para cada patrón:
+1. Nombre del patrón
+2. Descripción breve
+3. Dónde se aplica en el sitio
+4. Captura de pantalla
+5. Justificación (por qué mejora la UX)
+2. Prototipo HTML
+● Navegable
+● Basado en Bootstrap o superior
+● Responsive
+Criterios de evaluación
+Criterio
+3 puntos (Excelente)
+2 puntos (Bueno)
+1 punto (Básico)
+0 puntos (Deficiente)
+1. Uso de Bootstrap y maquetado (Grid + componentes)
+Uso correcto del grid (container, row, col), responsive utilities y múltiples componentes (navbar, cards, forms, buttons). Layout consistente
+Uso parcial del grid o componentes, con algunas inconsistencias
+Uso muy básico o incorrecto del framework
+No utiliza Bootstrap
+2. Diseño Responsive
+Adaptación completa a móvil, tablet y desktop. Navegación clara, contenido reorganizado correctamente, imágenes y formularios usables
+Funciona en varios tamaños pero con problemas de legibilidad o layout
+Adaptación limitada o deficiente
+No es responsive
+3. Estructura del sitio y navegación y explicación del diseño
+Estructura clara (inicio, listado, detalle, búsqueda, carrito). Navegación intuitiva (menú, categorías, flujo lógico)
+Estructura presente pero con problemas de organización o navegación
+Estructura incompleta o confusa
+No hay estructura clara
+4. Patrones de diseño (implementación + documentación)
+Implementa ≥3 patrones correctamente y los documenta con descripción, capturas y justificación UX clara
+Implementa patrones pero con documentación parcial o poco clara
+Patrones poco claros o mal documentados
+No implementa ni documenta patrones
+5. Formularios y flujo de interacción (compra)
+Formularios bien estructurados (labels, inputs correctos, ayuda, agrupación). Flujo completo y usable en móvil
+Formularios funcionales con problemas de organización o UX
+Formularios incompletos o difíciles de usar
+No implementa correctamente
