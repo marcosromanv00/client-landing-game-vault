@@ -46,7 +46,7 @@ const NavbarContent = () => {
 
   return (
     <>
-      <header className={`header-main transition-all ${isHome ? 'position-fixed w-100 z-3 px-4' : 'position-sticky top-0 z-3'} ${isScrolled ? 'pt-2' : 'pt-4'}`}>
+      <header className={`header-main transition-all ${isHome ? 'position-fixed w-100 z-3 px-4' : 'position-sticky top-0 z-3'} ${isScrolled ? 'py-2' : 'py-3'}`}>
         
         {/* Level 1: Administrative */}
         <nav className="navbar navbar-expand navbar-dark mx-auto rounded-pill px-4 py-2 glass-header-v2 mb-2" style={{ maxWidth: '1200px' }}>

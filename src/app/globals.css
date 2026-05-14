@@ -5,13 +5,13 @@
   --gv-surface: #1a1a1a;
   --gv-text-muted: #a0a0a0;
   
-  --color-bg: #ffffff;
-  --color-surface: #f8f8f8;
-  --color-surface-2: #f0f0f0;
+  --color-bg: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-surface-2: #242424;
   --color-border: #e41e1e;
   --color-accent: #e41e1e;
-  --color-text: #0a0a0a;
-  --color-text-muted: #666666;
+  --color-text: #ffffff;
+  --color-text-muted: #a0a0a0;
   --color-price: #008844;
 
   --font-bebas: var(--font-bebas), 'Bebas Neue', sans-serif;
@@ -24,9 +24,15 @@
   --nav-height: 70px;
 }
 
+html {
+  background-color: var(--gv-black);
+}
+
 body {
-  background-color: var(--color-bg);
+  background-color: var(--gv-black);
   color: var(--color-text);
+  margin: 0;
+  padding: 0;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
 }
@@ -41,8 +47,8 @@ h1, h2, h3, .gv-display {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: transparent;
-  padding-top: 15px;
+  background-color: transparent !important;
+  padding-top: 0;
 }
 
 .floating-nav {
@@ -327,4 +333,11 @@ h1, h2, h3, .gv-display {
 .btn-outline-gv-red:hover {
   background: var(--gv-red);
   color: white;
+}
+
+@media (max-width: 991.98px) {
+  .checkout-summary-card {
+    position: static !important;
+    margin-top: 2rem;
+  }
 }
