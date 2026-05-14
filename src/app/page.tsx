@@ -7,6 +7,7 @@ import GameCarousel from '@/components/GameCarousel';
 import ProductCard from '@/components/ProductCard';
 import CategoryBar from '@/components/CategoryBar';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Game } from '@/lib/data';
 import { getProducts } from '@/lib/supabase';
 
@@ -90,9 +91,34 @@ export default function Home() {
               <div className="col-md-7 col-lg-8">
                 <div className="row g-4">
                   <div className="col-md-12">
-                     <div className="gv-card w-100 position-relative overflow-hidden" style={{ height: '220px' }}>
-                        <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(135deg, ${recGames[1].gradFrom}, ${recGames[1].gradTo})`, opacity: 0.9 }}></div>
-                        <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4">
+                      <div className="gv-card w-100 position-relative overflow-hidden shadow-lg" style={{ height: '220px' }}>
+                        <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(135deg, ${recGames[1].gradFrom}, ${recGames[1].gradTo})`, opacity: 0.85, zIndex: 1 }}></div>
+                        
+                        {/* Background Layer */}
+                        <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
+                          <Image 
+                            src="/assets/RDR_HeroBack.jpeg" 
+                            alt="" 
+                            fill 
+                            sizes="(max-width: 1200px) 100vw, 1000px"
+                            style={{ objectFit: 'cover', opacity: 0.3 }} 
+                          />
+                        </div>
+
+                        {/* Character Layer */}
+                        <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
+                          <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.2) translateX(35%) translateY(10%)' }}>
+                            <Image 
+                              src="/assets/RDR_HeroCharacter.png" 
+                              alt="" 
+                              fill 
+                              sizes="400px"
+                              style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4" style={{ zIndex: 2 }}>
                           <div>
                             <span className="badge bg-white text-dark mb-2">DESTACADO</span>
                             <h3 className="gv-display h2 mb-1 text-white">{recGames[1].title}</h3>
@@ -100,7 +126,7 @@ export default function Home() {
                           </div>
                           <Link href={`/product/${recGames[1].slug}`} className="btn btn-gv-red rounded-0 px-4 py-2 fw-bold shadow">RESERVAR AHORA</Link>
                         </div>
-                     </div>
+                      </div>
                   </div>
                   <div className="col-md-6">
                     <ProductCard game={recGames[2]} />

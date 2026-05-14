@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   Monitor, 
   Gamepad, 
@@ -76,18 +77,46 @@ export default function CategoryBar() {
     <section className="bg-white py-4 py-md-5 shadow-sm relative z-10 border-bottom border-light overflow-hidden">
       <div className="container">
         <div className="row g-3 g-md-4 justify-content-start justify-content-lg-center flex-nowrap overflow-auto pb-2 category-nav-scroll">
-          {categories.map((category) => {
+          {categories.map((category, index) => {
             const Icon = category.icon;
+            const isRDR = index % 2 !== 0;
+            const assets = {
+              bg: isRDR ? '/assets/RDR_HeroBack.jpeg' : '/assets/GOW_HeroBack.jpeg',
+              char: isRDR ? '/assets/RDR_HeroCharacter.png' : '/assets/GOW_HeroCharacter.png'
+            };
+
             return (
               <div key={category.id} className="col-auto col-lg">
                 <Link href={`/catalog?category=${category.slug}`} className="text-decoration-none group">
-                  <div className="category-card d-flex flex-column align-items-center p-3 p-md-4 rounded-4 text-center" style={{ minWidth: '110px' }}>
-                    <div className="icon-wrapper mb-2 mb-md-3 d-flex align-items-center justify-content-center transition-all">
+                  <div className="category-card d-flex flex-column align-items-center p-3 p-md-4 rounded-4 text-center overflow-hidden position-relative" style={{ minWidth: '110px' }}>
+                    {/* Background Layer */}
+                    <div className="position-absolute top-0 start-0 w-100 h-100 z-0 opacity-0 category-bg-hover transition-all">
+                      <Image 
+                        src={assets.bg} 
+                        alt="" 
+                        fill 
+                        sizes="150px"
+                        style={{ objectFit: 'cover', opacity: 0.2 }} 
+                      />
+                    </div>
+                    
+                    {/* Character Layer */}
+                    <div className="position-absolute top-0 start-0 w-100 h-100 z-0 opacity-0 category-char-hover transition-all" style={{ transform: 'scale(1.2) translateY(10%) translateX(10%)' }}>
+                      <Image 
+                        src={assets.char} 
+                        alt="" 
+                        fill 
+                        sizes="150px"
+                        style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
+                      />
+                    </div>
+
+                    <div className="icon-wrapper mb-2 mb-md-3 d-flex align-items-center justify-content-center transition-all position-relative z-1">
                       <div className="icon-container d-flex align-items-center justify-content-center">
                         <Icon size={28} strokeWidth={1.5} />
                       </div>
                     </div>
-                    <span className="category-name text-dark fw-bold transition-all">
+                    <span className="category-name text-dark fw-bold transition-all position-relative z-1">
                       {category.name}
                     </span>
                   </div>
@@ -148,6 +177,15 @@ export default function CategoryBar() {
 
         .category-card:hover .icon-container {
           background: rgba(228, 30, 30, 0.05);
+        }
+
+        .category-card:hover .category-bg-hover,
+        .category-card:hover .category-char-hover {
+          opacity: 1;
+        }
+
+        .category-card:hover .category-char-hover {
+          transform: scale(1.3) translateY(5%) translateX(5%);
         }
 
         @media (min-width: 992px) {

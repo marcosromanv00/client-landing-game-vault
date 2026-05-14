@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Game } from '@/lib/data';
 
 interface BentoGridProps {
@@ -33,8 +34,31 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
              <div className="row g-4 h-100">
                 <div className="col-12">
                     <div className="gv-card w-100 position-relative overflow-hidden shadow-lg" style={{ height: '300px' }}>
-                         <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(90deg, ${games[1].gradFrom}, ${games[1].gradTo})`, zIndex: 0 }}></div>
-                         <div className="position-absolute top-0 end-0 w-50 h-100 d-none d-md-block" style={{ background: `url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800') center/cover`, opacity: 0.15, mixBlendMode: 'overlay', zIndex: 1 }}></div>
+                         <div className="gv-card-gradient position-absolute top-0 start-0 w-100 h-100" style={{ background: `linear-gradient(90deg, ${games[1].gradFrom}, ${games[1].gradTo})`, zIndex: 1, opacity: 0.85 }}></div>
+                         
+                         {/* Background Layer */}
+                         <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
+                           <Image 
+                             src="/assets/GOW_HeroBack.jpeg" 
+                             alt="" 
+                             fill 
+                             sizes="(max-width: 1200px) 100vw, 800px"
+                             style={{ objectFit: 'cover', opacity: 0.4 }} 
+                           />
+                         </div>
+
+                         {/* Character Layer */}
+                         <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
+                            <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.1) translateX(25%) translateY(5%)' }}>
+                              <Image 
+                                src="/assets/GOW_HeroCharacter.png" 
+                                alt="" 
+                                fill 
+                                sizes="400px"
+                                style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
+                              />
+                            </div>
+                         </div>
                          
                          <div className="gv-card-content position-relative d-flex justify-content-between align-items-center h-100 p-4 p-md-5" style={{ zIndex: 2, background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)' }}>
                             <div className="flex-grow-1">
@@ -63,14 +87,38 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
           {/* Middle Row: Denser Grid */}
           <div className="col-md-12 col-lg-6">
             <div className="gv-card h-100 bg-gv-red d-flex flex-row align-items-center justify-content-between p-4 p-md-5 overflow-hidden position-relative group shadow-lg">
-                <div className="position-absolute top-0 end-0 w-100 h-100 opacity-10 pointer-events-none transition-all" style={{ background: 'radial-gradient(circle at top right, white, transparent)' }}></div>
-                <div className="position-relative" style={{ zIndex: 1 }}>
+                {/* Background Layer */}
+                <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
+                  <Image 
+                    src="/assets/RDR_HeroBack.jpeg" 
+                    alt="" 
+                    fill 
+                    sizes="(max-width: 1200px) 100vw, 800px"
+                    style={{ objectFit: 'cover', opacity: 0.3 }} 
+                  />
+                </div>
+
+                {/* Character Layer */}
+                <div className="position-absolute top-0 start-0 w-100 h-100 z-1" style={{ pointerEvents: 'none' }}>
+                  <div className="position-relative w-100 h-100" style={{ transform: 'scale(1.3) translateX(30%)' }}>
+                    <Image 
+                      src="/assets/RDR_HeroCharacter.png" 
+                      alt="" 
+                      fill 
+                      sizes="400px"
+                      style={{ objectFit: 'contain', objectPosition: 'bottom right' }} 
+                    />
+                  </div>
+                </div>
+
+                <div className="position-absolute top-0 end-0 w-100 h-100 opacity-10 pointer-events-none transition-all z-2" style={{ background: 'radial-gradient(circle at top right, white, transparent)' }}></div>
+                <div className="position-relative" style={{ zIndex: 3 }}>
                     <div className="display-3 gv-display text-white mb-0" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>-70%</div>
                     <h3 className="gv-display text-white mb-3">OFERTA FLASH</h3>
                     <p className="text-white opacity-90 mb-4 d-none d-md-block fw-light" style={{ maxWidth: '250px' }}>Solo por las próximas 24 horas. Amplía tu colección hoy mismo.</p>
                     <Link href="/catalog" className="btn btn-white text-gv-red rounded-0 px-5 py-2 fw-bold shadow hover-scale transition-all" style={{ background: 'white' }}>VER OFERTAS</Link>
                 </div>
-                <div className="d-none d-md-block position-relative" style={{ zIndex: 1, transform: 'rotate(15deg)' }}>
+                <div className="d-none d-md-block position-relative" style={{ zIndex: 3, transform: 'rotate(15deg)' }}>
                     <i className="bi bi-lightning-fill text-white" style={{ fontSize: '10rem', opacity: 0.15 }}></i>
                 </div>
             </div>
@@ -86,8 +134,19 @@ const BentoGrid: React.FC<BentoGridProps> = ({ games = [] }) => {
           {games.length >= 8 && (
             <>
               <div className="col-12">
-                <div className="gv-card bg-dark d-flex align-items-center p-4 p-md-5 border border-secondary border-opacity-20 shadow-sm transition-all hover-scale" style={{ height: 'auto', minHeight: '120px' }}>
-                    <div className="row g-0 align-items-center w-100">
+                <div className="gv-card bg-dark d-flex align-items-center p-4 p-md-5 border border-secondary border-opacity-20 shadow-sm transition-all hover-scale overflow-hidden position-relative" style={{ height: 'auto', minHeight: '120px' }}>
+                    {/* Background Layer */}
+                    <div className="position-absolute top-0 start-0 w-100 h-100 z-0">
+                      <Image 
+                        src="/assets/GOW_HeroBack.jpeg" 
+                        alt="" 
+                        fill 
+                        sizes="100vw"
+                        style={{ objectFit: 'cover', opacity: 0.2 }} 
+                      />
+                    </div>
+                    
+                    <div className="row g-0 align-items-center w-100 position-relative z-1">
                         <div className="col-8 col-md-9">
                             <h4 className="gv-display text-white mb-1 fs-2">PRÓXIMOS LANZAMIENTOS Y PRE-VENTAS</h4>
                             <p className="text-muted small mb-0 d-none d-sm-block fs-6">Asegura tu copia de los juegos más esperados del año con beneficios exclusivos de reserva.</p>
